@@ -1,1 +1,1 @@
-# -Obsidian-repo
+Obsidian repo Myślnia
