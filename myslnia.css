@@ -363,3 +363,184 @@
   padding: 1.2rem 1.4rem;
   margin: 0;
 }
+
+/* ============================================================
+   TAB BAR MICROSCENE — OBSIDIAN (Desktop + iPad)
+   Stable, scoped styling for .workspace-tab-header-container only.
+   No fullscreen overlays, no fixed positioning, no viewport-sized effects.
+   ============================================================ */
+
+:root {
+  /* Required palette */
+  --mw-title: #6a4e6f;
+  --mw-text: #302b5d;
+  --mw-accent: #962814;
+  --mw-app-bg: #eae3db;
+  --mw-note-bg: #f5f2ee;
+}
+
+/* Optional helper classes on body:
+   - body.theme-forest-window   (default vibe)
+   - body.theme-twilight-window */
+body.theme-forest-window,
+body.theme-twilight-window {
+  --background-primary: var(--mw-note-bg);
+  --background-secondary: var(--mw-app-bg);
+}
+
+/* Core container: every decorative layer is clipped to tab bar only. */
+.workspace-tab-header-container {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 14px;
+  padding-inline: 6px;
+  background: linear-gradient(180deg, #f1eae2 0%, #e6ddd3 100%);
+  box-shadow: inset 0 -1px 0 rgba(48, 43, 93, 0.14);
+}
+
+/* Texture layer 1: paper/ceramic grain (scoped, absolute, non-interactive). */
+.workspace-tab-header-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 74% 68%, rgba(48, 43, 93, 0.07) 0 1px, transparent 1.3px),
+    repeating-linear-gradient(90deg, rgba(106, 78, 111, 0.03) 0 2px, transparent 2px 6px);
+  background-size: 130px 56px, 160px 64px, auto;
+  opacity: 0.75;
+}
+
+/* Texture layer 2: cozy vignette + warm lamp tint inside tab strip only. */
+.workspace-tab-header-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(140px 48px at 50% 8%, rgba(255, 213, 160, 0.18), transparent 72%),
+    linear-gradient(180deg, rgba(48, 43, 93, 0.05), rgba(150, 40, 20, 0.06));
+}
+
+/* Keep tab row content above decoration layers. */
+.workspace-tab-header-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Shared tab chip language: soft, organic, cozy. */
+.workspace-tab-header,
+.workspace-tab-header.is-pinned {
+  border-radius: 12px 12px 10px 10px;
+  margin: 4px 4px 3px;
+  border: 1px solid rgba(106, 78, 111, 0.22);
+  background: linear-gradient(180deg, rgba(245, 242, 238, 0.72), rgba(234, 227, 219, 0.62));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: background-color 140ms ease, box-shadow 160ms ease, border-color 140ms ease;
+}
+
+.workspace-tab-header-inner {
+  color: var(--mw-title);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.workspace-tab-header:hover {
+  border-color: rgba(106, 78, 111, 0.35);
+  background: linear-gradient(180deg, rgba(245, 242, 238, 0.86), rgba(234, 227, 219, 0.78));
+}
+
+/* Active tab: subtle warm illumination (no neon). */
+.workspace-tab-header.is-active {
+  border-color: rgba(150, 40, 20, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 239, 218, 0.82), rgba(245, 242, 238, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.52),
+    0 0 0 1px rgba(150, 40, 20, 0.08),
+    0 3px 10px rgba(150, 40, 20, 0.12);
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner {
+  color: var(--mw-text);
+}
+
+/* Controls keep the same color language. */
+.workspace-tab-header-container .clickable-icon,
+.workspace-tab-header-container .workspace-tab-header-new-tab,
+.workspace-tab-header-container .workspace-tab-header-tab-list {
+  color: var(--mw-title);
+}
+
+.workspace-tab-header-container .clickable-icon:hover {
+  color: var(--mw-text);
+  background-color: rgba(245, 242, 238, 0.7);
+}
+
+/* ----------------------------
+   VARIANT A — FOREST WINDOW
+   Micro-forest silhouettes + moss band + tiny mushroom dots.
+   ---------------------------- */
+body.theme-forest-window .workspace-tab-header-container {
+  background:
+    linear-gradient(180deg, #7e667f 0%, #5f506a 36%, #4b5a42 72%, #564534 100%);
+}
+
+body.theme-forest-window .workspace-tab-header-container::before {
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(38, 56, 34, 0.64) 0 2px,
+      transparent 2px 10px,
+      rgba(74, 99, 58, 0.5) 10px 13px,
+      transparent 13px 22px),
+    radial-gradient(10px 6px at 10% 95%, rgba(150, 40, 20, 0.42) 0 38%, transparent 39%),
+    radial-gradient(8px 5px at 22% 96%, rgba(150, 40, 20, 0.38) 0 40%, transparent 41%),
+    radial-gradient(11px 6px at 84% 95%, rgba(150, 40, 20, 0.34) 0 38%, transparent 39%),
+    repeating-linear-gradient(0deg,
+      rgba(139, 164, 113, 0.32) 0 2px,
+      rgba(72, 95, 58, 0.18) 2px 4px,
+      transparent 4px 8px);
+  background-size: auto, auto, auto, auto, auto;
+  background-position: 0 100%, 0 0, 0 0, 0 0, 0 100%;
+  opacity: 0.9;
+}
+
+body.theme-forest-window .workspace-tab-header-container::after {
+  background:
+    radial-gradient(120px 34px at 50% 8%, rgba(255, 220, 163, 0.2), transparent 72%),
+    linear-gradient(180deg, rgba(245, 242, 238, 0.09), rgba(24, 30, 20, 0.15));
+}
+
+/* ----------------------------
+   VARIANT B — TWILIGHT WINDOW
+   Moody plum sky + warm center lamp + retro interior hush.
+   ---------------------------- */
+body.theme-twilight-window .workspace-tab-header-container {
+  background:
+    linear-gradient(90deg,
+      #4f3f74 0%,
+      #6a4e6f 26%,
+      #962814 58%,
+      #6d5b32 82%,
+      #3e4b64 100%);
+}
+
+body.theme-twilight-window .workspace-tab-header-container::before {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 255, 255, 0.3) 0 100%, transparent 100%),
+    radial-gradient(1px 1px at 47% 18%, rgba(255, 245, 230, 0.24) 0 100%, transparent 100%),
+    radial-gradient(1px 1px at 81% 28%, rgba(255, 255, 255, 0.22) 0 100%, transparent 100%),
+    repeating-linear-gradient(90deg, rgba(255, 228, 188, 0.08) 0 1px, transparent 1px 11px);
+  background-size: auto, auto, auto, auto;
+  opacity: 0.8;
+}
+
+body.theme-twilight-window .workspace-tab-header-container::after {
+  background:
+    radial-gradient(210px 52px at 50% 10%, rgba(255, 206, 145, 0.26), transparent 70%),
+    linear-gradient(180deg, rgba(31, 22, 55, 0.12), rgba(18, 14, 26, 0.28));
+}
