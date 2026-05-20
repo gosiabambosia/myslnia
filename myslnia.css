@@ -363,3 +363,200 @@
   padding: 1.2rem 1.4rem;
   margin: 0;
 }
+
+/* ============================================================
+   OBSIDIAN TAB BAR — COZY WINDOW MICRO-WORLD
+   Scope: ONLY .workspace-tab-header-container and descendants.
+   Safety: no fixed positioning, no viewport overlays, no 100vw/100vh.
+   Toggle variants by adding to <body>:
+   - .theme-forest-window
+   - .theme-twilight-window
+============================================================ */
+
+:root {
+  /* Required palette */
+  --mw-title: #6a4e6f;
+  --mw-text: #302b5d;
+  --mw-accent: #962814;
+  --mw-app-bg: #eae3db;
+  --mw-note-bg: #f5f2ee;
+}
+
+/* Base app surfaces (keeps requested palette coherent in both desktop/iPad) */
+body {
+  background-color: var(--mw-app-bg);
+  color: var(--mw-text);
+}
+.markdown-source-view,
+.markdown-reading-view,
+.workspace-leaf-content,
+.view-content {
+  background-color: var(--mw-note-bg);
+  color: var(--mw-text);
+}
+
+/* ---------- Stable scoped tab-bar shell ---------- */
+.workspace-tab-header-container {
+  position: relative;
+  overflow: hidden; /* hard clip: pseudo-elements stay inside tab bar */
+  isolation: isolate; /* keeps stacking local to this container */
+  border-radius: 12px;
+  padding: 4px 6px;
+  border: 1px solid color-mix(in srgb, var(--mw-title) 20%, transparent);
+  box-shadow:
+    inset 0 -1px 0 color-mix(in srgb, var(--mw-accent) 26%, transparent),
+    0 2px 7px rgba(48, 43, 93, 0.12);
+}
+
+/* Background texture and painterly grain INSIDE the bar only */
+.workspace-tab-header-container::before,
+.workspace-tab-header-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.workspace-tab-header-container::before {
+  z-index: 0;
+  background:
+    radial-gradient(140% 100% at 50% 0%, rgba(255, 238, 205, 0.17), transparent 60%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.05)),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--mw-title) 12%, transparent) 0 1px,
+      transparent 1px 7px
+    );
+}
+
+.workspace-tab-header-container::after {
+  z-index: 1;
+  opacity: 0.28;
+  background:
+    radial-gradient(circle at 18% 58%, rgba(150, 40, 20, 0.24) 0 2px, transparent 3px),
+    radial-gradient(circle at 32% 64%, rgba(106, 78, 111, 0.20) 0 2px, transparent 3px),
+    radial-gradient(circle at 68% 62%, rgba(150, 40, 20, 0.18) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 55%, rgba(106, 78, 111, 0.20) 0 2px, transparent 3px);
+  background-size: 130px 100%, 170px 100%, 160px 100%, 150px 100%;
+}
+
+/* Keep real tab row above decorative layers */
+.workspace-tab-header-container > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Soft, organic tabs ---------- */
+.workspace-tab-header {
+  border-radius: 11px 11px 9px 9px;
+  margin-inline: 2px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(245, 242, 238, 0.09), rgba(48, 43, 93, 0.05));
+  transition: background-color 160ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.workspace-tab-header .workspace-tab-header-inner-title {
+  color: var(--mw-title);
+  font-weight: 560;
+  letter-spacing: 0.01em;
+}
+
+.workspace-tab-header:hover {
+  border-color: color-mix(in srgb, var(--mw-accent) 44%, transparent);
+  background:
+    linear-gradient(180deg, rgba(245, 242, 238, 0.20), rgba(106, 78, 111, 0.10));
+}
+
+/* Active tab: warm, subtle glow (not neon) */
+.workspace-tab-header.is-active,
+.workspace-tab-header[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--mw-accent) 50%, var(--mw-title) 50%);
+  background:
+    linear-gradient(180deg, rgba(245, 242, 238, 0.86), rgba(234, 227, 219, 0.80));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 235, 0.72),
+    0 0 0 1px rgba(150, 40, 20, 0.14),
+    0 4px 10px rgba(150, 40, 20, 0.14);
+}
+.workspace-tab-header.is-active .workspace-tab-header-inner-title,
+.workspace-tab-header[aria-selected="true"] .workspace-tab-header-inner-title {
+  color: var(--mw-text);
+}
+
+/* ============================================================
+   Variant 1: FOREST WINDOW
+   Cozy forest nook, moss line, tiny mushroom rhythm.
+============================================================ */
+body.theme-forest-window .workspace-tab-header-container {
+  background:
+    linear-gradient(180deg, #6d5367 0%, #4a3b57 45%, #302b5d 100%);
+}
+
+body.theme-forest-window .workspace-tab-header-container::before {
+  background:
+    radial-gradient(120% 95% at 50% -15%, rgba(205, 173, 124, 0.22), transparent 58%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(36, 58, 42, 0.22) 0 2px,
+      rgba(54, 73, 57, 0.12) 2px 6px,
+      transparent 6px 10px
+    );
+}
+
+body.theme-forest-window .workspace-tab-header-container::after {
+  opacity: 0.9;
+  background:
+    /* moss strip near the bottom edge */
+    radial-gradient(18px 8px at 3% 96%, rgba(95, 116, 75, 0.55) 0 90%, transparent 100%),
+    radial-gradient(16px 7px at 16% 97%, rgba(72, 102, 60, 0.54) 0 90%, transparent 100%),
+    radial-gradient(22px 9px at 31% 97%, rgba(91, 121, 76, 0.56) 0 90%, transparent 100%),
+    radial-gradient(20px 8px at 46% 97%, rgba(80, 110, 67, 0.54) 0 90%, transparent 100%),
+    radial-gradient(17px 7px at 62% 97%, rgba(95, 116, 75, 0.55) 0 90%, transparent 100%),
+    radial-gradient(19px 8px at 79% 97%, rgba(86, 108, 65, 0.53) 0 90%, transparent 100%),
+    radial-gradient(17px 7px at 94% 97%, rgba(72, 102, 60, 0.56) 0 90%, transparent 100%),
+    /* tiny mushroom caps */
+    radial-gradient(10px 5px at 23% 88%, rgba(150, 40, 20, 0.72) 0 85%, transparent 100%),
+    radial-gradient(9px 4px at 53% 90%, rgba(150, 40, 20, 0.70) 0 85%, transparent 100%),
+    radial-gradient(10px 5px at 84% 89%, rgba(150, 40, 20, 0.72) 0 85%, transparent 100%),
+    /* subtle firefly dots */
+    radial-gradient(circle at 26% 34%, rgba(248, 219, 164, 0.20) 0 2px, transparent 4px),
+    radial-gradient(circle at 74% 28%, rgba(248, 219, 164, 0.18) 0 2px, transparent 4px);
+}
+
+/* ============================================================
+   Variant 2: TWILIGHT WINDOW
+   Purple dusk sky + warm interior lamp glow in center.
+============================================================ */
+body.theme-twilight-window .workspace-tab-header-container {
+  background:
+    linear-gradient(90deg, #3e2f5d 0%, #6a4e6f 35%, #962814 58%, #564c32 100%);
+}
+
+body.theme-twilight-window .workspace-tab-header-container::before {
+  background:
+    radial-gradient(70% 140% at 50% -22%, rgba(222, 190, 144, 0.19), transparent 60%),
+    radial-gradient(45% 120% at 50% 96%, rgba(255, 196, 133, 0.22), transparent 65%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0 1px,
+      transparent 1px 8px
+    );
+}
+
+body.theme-twilight-window .workspace-tab-header-container::after {
+  opacity: 0.85;
+  background:
+    /* window mullions / retro panel rhythm */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 12%,
+      rgba(48, 43, 93, 0.20) 12% 12.7%,
+      transparent 12.7% 25%
+    ),
+    /* warm middle lamp haze */
+    radial-gradient(24% 90% at 50% 50%, rgba(255, 196, 133, 0.26), transparent 70%),
+    /* soft ceramic sparkle */
+    radial-gradient(circle at 44% 54%, rgba(252, 234, 198, 0.20) 0 2px, transparent 4px),
+    radial-gradient(circle at 57% 46%, rgba(252, 234, 198, 0.17) 0 2px, transparent 4px);
+}
