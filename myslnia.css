@@ -371,22 +371,12 @@
    ============================================================ */
 
 :root {
-  /* Required palette */
+  /* Required palette (used only by tab-bar rules below) */
   --mw-title: #6a4e6f;
   --mw-text: #302b5d;
   --mw-accent: #962814;
   --mw-app-bg: #eae3db;
   --mw-note-bg: #f5f2ee;
-}
-
-/* Optional helper classes (recommended):
-   - body.theme-forest-window (default, auto-fallback also enabled)
-   - body.theme-twilight-window
-   NOTE: fallback below makes forest render even without body class. */
-body.theme-forest-window,
-body.theme-twilight-window {
-  --background-primary: var(--mw-note-bg);
-  --background-secondary: var(--mw-app-bg);
 }
 
 /* Core container: every decorative layer is clipped to tab bar only. */
