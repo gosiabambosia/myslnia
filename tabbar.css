@@ -4,14 +4,13 @@
 
    Metafora:
    ▸ pasek zakładek   = zmierzchowe niebo (głęboki fiolet)
-   ▸ zakładki         = sylwetki w oknie (półprzezroczyste)
-   ▸ aktywna zakładka = ciepłe wnętrze (kremowa biel)
+   ▸ aktywna zakładka = ciepłe wnętrze przez okno (kremowa biel)
    ▸ linia akcentu    = migotanie świecy (ceglana czerwień)
 
    Inspiracje: Amelia · Gabinet Rozmaitości · Bohemian Paris
 ============================================================ */
 
-/* ── Paleta zmierzchowego okna ───────────────────────────── */
+/* ── Paleta ───────────────────────────────────────────────── */
 
 body {
   --my-tytul:        #6a4e6f;
@@ -20,29 +19,34 @@ body {
   --my-powierzchnia: #eae3db;
   --my-tlo:          #f5f2ee;
 
-  --my-cien:         rgba(48, 43, 93, 0.20);
-  --my-linia:        rgba(150, 40, 20, 0.20);
+  /* Obsidian CSS vars — body bije :root ale nie .theme-dark,
+     więc dla zmiennych używamy .theme-dark/.theme-light niżej */
+  --tab-radius:    5px;
+  --tab-max-width: 200px;
+  --tab-font-size: 0.83rem;
+}
 
-  /* Zmienne Obsidiana — nadpisane na body żeby bić theme */
-  --tab-text-color:           rgba(234, 227, 219, 0.65);
-  --tab-text-color-focused:   rgba(234, 227, 219, 0.80);
-  --tab-text-color-active:    #302b5d;
-  --tab-background-active:    #f5f2ee;
-  --tab-container-background: #3d2a52;
-  --tab-divider-color:        rgba(106, 78, 111, 0.30);
-  --tab-outline-color:        rgba(150, 40, 20, 0.25);
-  --tab-radius:               5px;
-  --tab-font-size:            0.73rem;
-  --tab-max-width:            200px;
+
+/* ── Obsidian vars: osobno dla dark i light ───────────────── */
+/* (musi bić .theme-dark deklaracje z aktywnego theme) */
+
+.theme-dark,
+.theme-light {
+  --tab-text-color:           rgba(234, 227, 219, 0.65) !important;
+  --tab-text-color-focused:   rgba(234, 227, 219, 0.80) !important;
+  --tab-text-color-active:    #302b5d !important;
+  --tab-background-active:    #f5f2ee !important;
+  --tab-container-background: #3d2a52 !important;
+  --tab-divider-color:        rgba(106, 78, 111, 0.30) !important;
+  --tab-outline-color:        rgba(150, 40, 20, 0.25) !important;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   PASEK ZAKŁADEK — zmierzchowe niebo za oknem
+   PASEK ZAKŁADEK — zmierzchowe niebo
    ════════════════════════════════════════════════════════════ */
 
 .workspace-tab-header-container {
-  /* gradient: ciemny fiolet u góry → głęboki purpur na dole */
   background: linear-gradient(
     to bottom,
     #2a1b40 0%,
@@ -50,8 +54,6 @@ body {
     #4a3060 100%
   ) !important;
   border-bottom: 2px solid rgba(150, 40, 20, 0.50) !important;
-
-  /* BRAK top-padding → zero clippingu zakładek od góry */
   padding: 0 4px 0 !important;
   gap: 0 !important;
   align-items: flex-end !important;
@@ -70,20 +72,16 @@ body {
    ════════════════════════════════════════════════════════════ */
 
 .workspace-tab-header {
-  /* Jawna wysokość zakładki — bez niej flexbox robi chaos */
-  height: 30px !important;
-  min-height: 30px !important;
-  max-height: 30px !important;
-
+  height: 32px !important;
   border-radius: 5px 5px 0 0 !important;
   border: 1px solid transparent !important;
   border-bottom: none !important;
   position: relative !important;
-  overflow: visible !important;
+  overflow: hidden !important;
   margin: 0 1px !important;
   transition:
     background-color 0.18s ease,
-    border-color 0.18s ease;
+    border-color     0.18s ease;
 }
 
 /* Nieaktywne */
@@ -100,44 +98,51 @@ body {
 
 /* ════════════════════════════════════════════════════════════
    AKTYWNA ZAKŁADKA — ciepłe okno wnętrza
+
+   Prefiks .theme-dark/.theme-light podnosi specyficzność
+   do (0,3,0) — bije (0,2,0) aktywnego theme'u.
    ════════════════════════════════════════════════════════════ */
 
-.workspace-tab-header.is-active {
+.theme-dark .workspace-tab-header.is-active,
+.theme-light .workspace-tab-header.is-active {
   background-color: #f5f2ee !important;
-  border-color:     rgba(150, 40, 20, 0.25) !important;
-  box-shadow:       2px 0 6px rgba(48, 43, 93, 0.40) !important;
-  z-index: 10 !important;
+  border-color:     rgba(150, 40, 20, 0.28) !important;
+  box-shadow:       0 0 10px rgba(48, 43, 93, 0.45) !important;
+  overflow:         visible !important;
+  z-index:          10 !important;
 }
 
-/* Ceglana linia akcentu (świeca) u szczytu aktywnej zakładki */
-.workspace-tab-header.is-active::before {
+/* Ceglana świeca — linia u szczytu aktywnej zakładki */
+.theme-dark .workspace-tab-header.is-active::before,
+.theme-light .workspace-tab-header.is-active::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 18%;
-  right: 18%;
+  left: 15%;
+  right: 15%;
   height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
     #962814 20%,
-    #c0391a 50%,
+    #c03418 50%,
     #962814 80%,
     transparent
   );
-  opacity: 0.85;
+  opacity: 0.90;
   pointer-events: none;
   z-index: 5;
 }
 
-/* Zakrywa dolną ceglana border kontenera (aktywna zakładka "wyrasta" ponad nią) */
-.workspace-tab-header.is-active::after {
+/* Białe "dno" zakrywające border-bottom paska */
+.theme-dark .workspace-tab-header.is-active::after,
+.theme-light .workspace-tab-header.is-active::after {
   content: '';
   position: absolute;
   bottom: -3px;
   left: -1px;
   right: -1px;
-  height: 3px;
+  height: 4px;
   background-color: #f5f2ee;
   pointer-events: none;
   z-index: 4;
@@ -145,11 +150,10 @@ body {
 
 
 /* ════════════════════════════════════════════════════════════
-   ZAWARTOŚĆ ZAKŁADKI — tekst i ikona
+   ZAWARTOŚĆ ZAKŁADKI
    ════════════════════════════════════════════════════════════ */
 
 .workspace-tab-header-inner {
-  /* TYLKO poziome padding — flexbox centruje pionowo */
   height: 100% !important;
   padding: 0 9px !important;
   display: flex !important;
@@ -158,13 +162,13 @@ body {
   box-sizing: border-box !important;
 }
 
-/* Tytuł zakładki */
+/* Tytuł — Poppins, bez italic, 0.83rem (zgodnie z preferencją) */
 .workspace-tab-header-inner-title {
-  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif !important;
-  font-style: italic !important;
-  font-size: 0.73rem !important;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif !important;
+  font-style:  normal !important;
+  font-size:   0.83rem !important;
   font-weight: 400 !important;
-  letter-spacing: 0.01em !important;
+  letter-spacing: 0.005em !important;
   line-height: 1 !important;
   white-space: nowrap !important;
   overflow: hidden !important;
@@ -172,19 +176,21 @@ body {
 }
 
 .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
-  color: rgba(234, 227, 219, 0.70) !important;
+  color: rgba(234, 227, 219, 0.68) !important;
 }
 
-.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+.theme-dark .workspace-tab-header.is-active .workspace-tab-header-inner-title,
+.theme-light .workspace-tab-header.is-active .workspace-tab-header-inner-title {
   color: #302b5d !important;
 }
 
 /* Ikona */
 .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-icon {
-  color: rgba(234, 227, 219, 0.38) !important;
+  color: rgba(234, 227, 219, 0.36) !important;
 }
 
-.workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+.theme-dark .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+.theme-light .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
   color: #6a4e6f !important;
 }
 
@@ -197,15 +203,16 @@ body {
   opacity: 0 !important;
   transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
   border-radius: 3px !important;
-  flex-shrink: 0 !important;
 }
 
 .workspace-tab-header:hover .workspace-tab-header-close-button {
   opacity: 0.55 !important;
+  color: rgba(234, 227, 219, 0.80) !important;
 }
 
-.workspace-tab-header.is-active .workspace-tab-header-close-button {
-  opacity: 0.50 !important;
+.theme-dark .workspace-tab-header.is-active .workspace-tab-header-close-button,
+.theme-light .workspace-tab-header.is-active .workspace-tab-header-close-button {
+  opacity: 0.48 !important;
   color: #6a4e6f !important;
 }
 
@@ -222,7 +229,7 @@ body {
 
 .workspace-tab-header-new-tab,
 .workspace-tab-header-tab-list-collapse-toggle {
-  color: rgba(234, 227, 219, 0.40) !important;
+  color: rgba(234, 227, 219, 0.38) !important;
   border-radius: 4px !important;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
@@ -245,7 +252,8 @@ body {
 
 .view-header-nav-buttons .clickable-icon {
   color: #6a4e6f !important;
-  opacity: 0.60;
+  opacity: 0.58;
+  transition: opacity 0.15s ease;
 }
 
 .view-header-nav-buttons .clickable-icon:hover {
@@ -253,11 +261,11 @@ body {
 }
 
 .view-header-breadcrumb {
-  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif !important;
-  font-style: italic !important;
-  font-size: 0.72rem !important;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif !important;
+  font-style:  normal !important;
+  font-size:   0.72rem !important;
   color: #302b5d !important;
-  opacity: 0.68;
+  opacity: 0.65;
 }
 
 .view-header-breadcrumb:hover {
@@ -270,16 +278,17 @@ body {
 }
 
 .view-header-title {
-  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif !important;
-  font-style: italic !important;
-  font-size: 0.80rem !important;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif !important;
+  font-style:  normal !important;
+  font-size:   0.83rem !important;
+  font-weight: 500 !important;
   color: #302b5d !important;
 }
 
 .view-header-icon,
 .view-actions .clickable-icon {
   color: #6a4e6f !important;
-  opacity: 0.58;
+  opacity: 0.55;
   transition: opacity 0.15s ease, color 0.15s ease;
 }
 
