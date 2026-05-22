@@ -1,0 +1,295 @@
+/* ============================================================
+   MYŚLNIA · Tab Bar — Twilight Window
+   „zmierzch za oknem, purpurowe niebo, ciepłe światła w środku"
+
+   Metafora:
+   ▸ pasek zakładek  = zmierzchowe niebo (ciemny fiolet)
+   ▸ zakładki        = sylwetki w oknie (półprzezroczyste)
+   ▸ aktywna zakładka= ciepłe wnętrze (kremowa biel)
+   ▸ linia akcentu   = migotanie świecy (ceglana czerwień)
+
+   Inspiracje: Amelia · Gabinet Rozmaitości · Bohemian Paris
+============================================================ */
+
+/* ── Paleta zmierzchowego okna ───────────────────────────── */
+
+:root {
+  --my-tytul:        #6a4e6f;
+  --my-tekst:        #302b5d;
+  --my-akcent:       #962814;
+  --my-powierzchnia: #eae3db;
+  --my-tlo:          #f5f2ee;
+
+  --my-cien:         rgba(48, 43, 93, 0.18);
+  --my-linia:        rgba(150, 40, 20, 0.18);
+  --my-tasma:        rgba(234, 227, 219, 0.5);
+  --my-powloka:      rgba(106, 78, 111, 0.08);
+}
+
+
+/* ── Nadpisanie zmiennych Obsidiana ──────────────────────── */
+
+.workspace-tabs.mod-top {
+  --tab-text-color:            rgba(234, 227, 219, 0.68);
+  --tab-text-color-focused:    rgba(234, 227, 219, 0.85);
+  --tab-text-color-active:     #302b5d;
+  --tab-background-active:     #f5f2ee;
+  --tab-container-background:  #302b5d;
+  --tab-divider-color:         rgba(106, 78, 111, 0.22);
+  --tab-outline-color:         rgba(150, 40, 20, 0.20);
+  --tab-radius:                6px;
+  --tab-font-size:             0.74rem;
+  --tab-width:                 120px;
+  --tab-max-width:             210px;
+  --tab-padding-x:             10px;
+}
+
+
+/* ── PASEK ZAKŁADEK — zmierzchowe niebo ──────────────────── */
+
+.workspace-tab-header-container.mod-top {
+  background: linear-gradient(
+    180deg,
+    #241a3e 0%,
+    #302b5d 55%,
+    #3d2a52 100%
+  );
+  border-bottom: 2px solid rgba(150, 40, 20, 0.38);
+  padding: 7px 6px 0;
+  gap: 2px;
+}
+
+.workspace-tab-header-container-inner {
+  gap: 2px;
+  align-items: flex-end;
+}
+
+
+/* ── ZAKŁADKI — sylwetki w oknie ─────────────────────────── */
+
+.workspace-tab-header {
+  border-radius: 6px 6px 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  position: relative;
+  overflow: visible;
+  margin: 0;
+  transition:
+    background   0.20s ease,
+    border-color 0.20s ease,
+    box-shadow   0.20s ease;
+}
+
+/* Nieaktywne */
+.workspace-tab-header:not(.is-active) {
+  background:   rgba(106, 78, 111, 0.14);
+  border-color: rgba(106, 78, 111, 0.10);
+  top: 1px;
+}
+
+.workspace-tab-header:not(.is-active):hover {
+  background:   rgba(106, 78, 111, 0.34);
+  border-color: rgba(106, 78, 111, 0.22);
+}
+
+
+/* ── AKTYWNA ZAKŁADKA — ciepłe wnętrze ───────────────────── */
+
+.workspace-tab-header.is-active {
+  background:   var(--my-tlo);
+  border-color: rgba(150, 40, 20, 0.20);
+  box-shadow:
+    0 -1px 6px rgba(48, 43, 93, 0.30),
+    inset 0 -2px 0 var(--my-tlo);
+  z-index: 2;
+}
+
+/* Linia akcentu — migotanie świecy */
+.workspace-tab-header.is-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16%;
+  right: 16%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--my-akcent) 25%,
+    var(--my-akcent) 75%,
+    transparent 100%
+  );
+  border-radius: 0 0 2px 2px;
+  opacity: 0.80;
+  pointer-events: none;
+}
+
+/* Wyrównanie dolnej krawędzi z border-bottom paska */
+.workspace-tab-header.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--my-tlo);
+  pointer-events: none;
+  z-index: 3;
+}
+
+
+/* ── ZAWARTOŚĆ ZAKŁADKI ───────────────────────────────────── */
+
+.workspace-tab-header-inner {
+  padding: 5px var(--tab-padding-x);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Tytuł */
+.workspace-tab-header-inner-title {
+  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: var(--tab-font-size);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
+  color: rgba(234, 227, 219, 0.70);
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  color: var(--my-tekst);
+  opacity: 1;
+}
+
+/* Ikona */
+.workspace-tab-header-inner-icon {
+  flex-shrink: 0;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-icon {
+  color: rgba(234, 227, 219, 0.42);
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  color: var(--my-tytul);
+}
+
+
+/* ── PRZYCISK ZAMKNIĘCIA ──────────────────────────────────── */
+
+.workspace-tab-header-close-button {
+  opacity: 0;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease;
+  color: rgba(234, 227, 219, 0.60);
+}
+
+.workspace-tab-header:not(.is-active):hover .workspace-tab-header-close-button,
+.workspace-tab-header.is-active .workspace-tab-header-close-button {
+  opacity: 0.55;
+}
+
+.workspace-tab-header-close-button:hover {
+  opacity: 1 !important;
+  color: var(--my-akcent) !important;
+  background: rgba(150, 40, 20, 0.10) !important;
+}
+
+
+/* ── NOWA ZAKŁADKA ────────────────────────────────────────── */
+
+.workspace-tab-header-new-tab {
+  color: rgba(234, 227, 219, 0.45);
+  border-radius: 5px;
+  transition: color 0.15s ease, background 0.15s ease;
+  margin: 0 2px;
+}
+
+.workspace-tab-header-new-tab:hover {
+  color: var(--my-powierzchnia);
+  background: rgba(106, 78, 111, 0.28);
+}
+
+
+/* ── DROPDOWN "WIĘCEJ" ────────────────────────────────────── */
+
+.workspace-tab-header-tab-list-collapse-toggle {
+  color: rgba(234, 227, 219, 0.42);
+  border-radius: 5px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.workspace-tab-header-tab-list-collapse-toggle:hover {
+  color: var(--my-powierzchnia);
+  background: rgba(106, 78, 111, 0.28);
+}
+
+
+/* ── PASEK NAWIGACJI (okruszki) ───────────────────────────── */
+
+.view-header {
+  background: var(--my-tlo);
+  border-bottom: 1px solid var(--my-linia);
+}
+
+.view-header-nav-buttons .clickable-icon {
+  color: var(--my-tytul);
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
+}
+
+.view-header-nav-buttons .clickable-icon:hover {
+  opacity: 1;
+}
+
+/* Breadcrumbs */
+.view-header-breadcrumb {
+  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.73rem;
+  color: var(--my-tekst);
+  opacity: 0.72;
+  transition: opacity 0.15s ease;
+}
+
+.view-header-breadcrumb:hover {
+  opacity: 1;
+}
+
+/* Separator / między okruszkami */
+.view-header-breadcrumb-separator {
+  color: var(--my-tytul);
+  opacity: 0.50;
+}
+
+/* Tytuł bieżący (ostatni okruszek) */
+.view-header-title {
+  font-family: 'Yeseva One', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--my-tekst);
+  letter-spacing: 0.01em;
+}
+
+/* Przyciski akcji w headerze (edycja, ...) */
+.view-header-icon,
+.view-actions .clickable-icon {
+  color: var(--my-tytul);
+  opacity: 0.60;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.view-header-icon:hover,
+.view-actions .clickable-icon:hover {
+  opacity: 1;
+  color: var(--my-akcent);
+}
