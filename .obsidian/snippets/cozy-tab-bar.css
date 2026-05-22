@@ -69,6 +69,15 @@
   transform: none;
 }
 
+/* Zabij pseudo-elementy motywu (uszka / notche narożnikowe) */
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
 /* Tekst i ikony */
 .workspace-tab-header-container .workspace-tab-header-inner-title,
 .workspace-tab-header-container .workspace-tab-header-inner-icon svg,
@@ -86,7 +95,7 @@
   opacity: 1;
 }
 
-.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+.workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner-title {
   font-weight: 500 !important;
 }
 
