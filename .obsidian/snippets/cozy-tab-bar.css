@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+
+/* GÓRNY PASEK ZAKŁADEK */
+.workspace-tab-header-container {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(255, 190, 210, 0.18), transparent 18%),
+    radial-gradient(circle at 82% 22%, rgba(255, 220, 150, 0.10), transparent 60%),
+    linear-gradient(90deg,
+      #3f1006 0%,
+      #691a0a 22%,
+      #8a2631 48%,
+      #966936 72%,
+      #555839 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+  border-bottom: none;
+}
+
+/* Ziarno / mgiełka */
+.workspace-tab-header-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+}
+
+/* Delikatny połysk nad paskiem */
+.workspace-tab-header-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10), transparent 24%),
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* Same zakładki */
+.workspace-tab-header {
+  border-radius: 18px !important;
+  margin: 6px 4px !important;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.workspace-tab-header:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
+}
+
+/* aktywna zakładka */
+.workspace-tab-header.is-active {
+  background: rgba(245, 242, 238, 0.85) !important;
+  border-radius: 6px 6px 0 0 !important;
+  border: none !important;
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 250, 240, 0.38);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: none;
+}
+
+/* Zabij pseudo-elementy motywu (uszka / notche narożnikowe) */
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Tekst i ikony */
+.workspace-tab-header-container .workspace-tab-header-inner-title,
+.workspace-tab-header-container .workspace-tab-header-inner-icon svg,
+.workspace-tab-header .workspace-tab-header-status-icon svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+  opacity: 0.92;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-title,
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon svg,
+.workspace-tab-header.is-active .workspace-tab-header-status-icon svg {
+  color: #6a4e6f !important;
+  stroke: #6a4e6f !important;
+  opacity: 1;
+}
+
+.workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  font-family: 'Fraunces', serif !important;
+  font-optical-sizing: auto !important;
+  font-weight: 752 !important;
+  font-style: normal !important;
+  font-size: 12.5px !important;
+  font-variation-settings: "SOFT" 64.6, "WONK" 1 !important;
+}
+
+/* Lewy i prawy przycisk paska bocznego */
+.titlebar-button-container,
+.sidebar-toggle-button {
+  background: transparent !important;
+}
+
+.sidebar-toggle-button svg,
+.mod-right .sidebar-toggle-button svg,
+.mod-right-split .sidebar-toggle-button svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+  opacity: 0.85 !important;
+}
+
+/* Przycisk nowej karty */
+.workspace-tab-header-new-tab {
+  color: #f4e9df !important;
+  opacity: 0.70 !important;
+  transition: opacity 150ms ease !important;
+}
+
+.workspace-tab-header-new-tab svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+}
+
+.workspace-tab-header-new-tab:hover {
+  opacity: 1 !important;
+}
