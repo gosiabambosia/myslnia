@@ -1,11 +1,7 @@
 /* ============================================================
-   MYŚLNIA · Tab Bar — Twilight Window
-   „zmierzch za oknem, purpurowe niebo, ciepłe światła w środku"
-
-   Metafora:
-   ▸ pasek zakładek   = zmierzchowe niebo (głęboki fiolet)
-   ▸ aktywna zakładka = ciepłe wnętrze przez okno (kremowa biel)
-   ▸ linia akcentu    = migotanie świecy (ceglana czerwień)
+   MYŚLNIA · Tab Bar — Lofi Parapet
+   Ciepły parapet okna w przytulnym pokoju — kremowe płótno,
+   papierowe zakładki, ceglana wstążka, granatowy atrament.
 
    Inspiracje: Amelia · Gabinet Rozmaitości · Bohemian Paris
 ============================================================ */
@@ -18,43 +14,42 @@ body {
   --my-akcent:       #962814;
   --my-powierzchnia: #eae3db;
   --my-tlo:          #f5f2ee;
-
-  /* Obsidian CSS vars — body bije :root ale nie .theme-dark,
-     więc dla zmiennych używamy .theme-dark/.theme-light niżej */
-  --tab-radius:    5px;
-  --tab-max-width: 200px;
-  --tab-font-size: 0.83rem;
 }
 
-
-/* ── Obsidian vars: osobno dla dark i light ───────────────── */
-/* (musi bić .theme-dark deklaracje z aktywnego theme) */
-
+/* Nadpisanie zmiennych Obsidiana — na .theme-* bije theme */
 .theme-dark,
 .theme-light {
-  --tab-text-color:           rgba(234, 227, 219, 0.65) !important;
-  --tab-text-color-focused:   rgba(234, 227, 219, 0.80) !important;
+  --tab-text-color:           #302b5d !important;
+  --tab-text-color-focused:   #302b5d !important;
   --tab-text-color-active:    #302b5d !important;
   --tab-background-active:    #f5f2ee !important;
-  --tab-container-background: #3d2a52 !important;
-  --tab-divider-color:        rgba(106, 78, 111, 0.30) !important;
-  --tab-outline-color:        rgba(150, 40, 20, 0.25) !important;
+  --tab-container-background: #ede6dc !important;
+  --tab-divider-color:        rgba(150, 40, 20, 0.18) !important;
+  --tab-outline-color:        rgba(106, 78, 111, 0.20) !important;
+  --tab-radius:               5px !important;
+  --tab-font-size:            0.83rem !important;
+  --tab-max-width:            200px !important;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   PASEK ZAKŁADEK — zmierzchowe niebo
+   PASEK ZAKŁADEK — ciepły parapet
    ════════════════════════════════════════════════════════════ */
 
 .workspace-tab-header-container {
+  /* Gradient: ciepłe drewno / płótno */
   background: linear-gradient(
     to bottom,
-    #2a1b40 0%,
-    #3d2a52 50%,
-    #4a3060 100%
+    #e2d9ce 0%,
+    #ede6dc 45%,
+    #e8e0d5 100%
   ) !important;
-  border-bottom: 2px solid rgba(150, 40, 20, 0.50) !important;
-  padding: 0 4px 0 !important;
+
+  border-bottom: 2px solid rgba(150, 40, 20, 0.28) !important;
+  box-shadow: 0 2px 8px rgba(48, 43, 93, 0.08) !important;
+
+  /* Brak top-padding — zapobiega clippingowi zakładek */
+  padding: 0 6px 0 !important;
   gap: 0 !important;
   align-items: flex-end !important;
 }
@@ -62,17 +57,17 @@ body {
 .workspace-tab-header-container-inner {
   align-items: flex-end !important;
   height: 100% !important;
-  gap: 1px !important;
+  gap: 2px !important;
   padding: 0 !important;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   ZAKŁADKI — sylwetki w zmierzchu
+   ZAKŁADKI — papierowe karty na parapecie
    ════════════════════════════════════════════════════════════ */
 
 .workspace-tab-header {
-  height: 32px !important;
+  height: 30px !important;
   border-radius: 5px 5px 0 0 !important;
   border: 1px solid transparent !important;
   border-bottom: none !important;
@@ -81,60 +76,60 @@ body {
   margin: 0 1px !important;
   transition:
     background-color 0.18s ease,
-    border-color     0.18s ease;
+    border-color     0.18s ease,
+    box-shadow       0.18s ease;
 }
 
-/* Nieaktywne */
+/* Nieaktywne — lekko pożółkłe karty */
 .workspace-tab-header:not(.is-active) {
-  background-color: rgba(106, 78, 111, 0.18) !important;
+  background-color: rgba(234, 227, 219, 0.55) !important;
   border-color:     rgba(106, 78, 111, 0.14) !important;
 }
 
 .workspace-tab-header:not(.is-active):hover {
-  background-color: rgba(106, 78, 111, 0.38) !important;
-  border-color:     rgba(106, 78, 111, 0.28) !important;
+  background-color: rgba(245, 242, 238, 0.80) !important;
+  border-color:     rgba(106, 78, 111, 0.22) !important;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   AKTYWNA ZAKŁADKA — ciepłe okno wnętrza
-
-   Prefiks .theme-dark/.theme-light podnosi specyficzność
-   do (0,3,0) — bije (0,2,0) aktywnego theme'u.
+   AKTYWNA ZAKŁADKA — otwarta karta / rozświetlony papier
    ════════════════════════════════════════════════════════════ */
 
 .theme-dark .workspace-tab-header.is-active,
 .theme-light .workspace-tab-header.is-active {
   background-color: #f5f2ee !important;
-  border-color:     rgba(150, 40, 20, 0.28) !important;
-  box-shadow:       0 0 10px rgba(48, 43, 93, 0.45) !important;
-  overflow:         visible !important;
-  z-index:          10 !important;
+  border-color:     rgba(150, 40, 20, 0.22) !important;
+  box-shadow:
+    0 -2px 6px rgba(48, 43, 93, 0.10),
+    0 1px 0   #f5f2ee !important;
+  overflow: visible !important;
+  z-index: 10 !important;
 }
 
-/* Ceglana świeca — linia u szczytu aktywnej zakładki */
+/* Ceglana wstążka — zakładka aktywna */
 .theme-dark .workspace-tab-header.is-active::before,
 .theme-light .workspace-tab-header.is-active::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 15%;
-  right: 15%;
+  left: 12%;
+  right: 12%;
   height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
-    #962814 20%,
+    #962814 22%,
     #c03418 50%,
-    #962814 80%,
+    #962814 78%,
     transparent
   );
-  opacity: 0.90;
+  opacity: 0.85;
   pointer-events: none;
   z-index: 5;
 }
 
-/* Białe "dno" zakrywające border-bottom paska */
+/* Zakrywa dolną ramkę paska pod aktywną zakładką */
 .theme-dark .workspace-tab-header.is-active::after,
 .theme-light .workspace-tab-header.is-active::after {
   content: '';
@@ -162,7 +157,7 @@ body {
   box-sizing: border-box !important;
 }
 
-/* Tytuł — Poppins, bez italic, 0.83rem (zgodnie z preferencją) */
+/* Tytuł — Poppins, bez italic, 0.83rem */
 .workspace-tab-header-inner-title {
   font-family: 'Poppins', 'Inter', system-ui, sans-serif !important;
   font-style:  normal !important;
@@ -175,10 +170,12 @@ body {
   text-overflow: ellipsis !important;
 }
 
+/* Nieaktywna zakładka — przyciemniony atrament */
 .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
-  color: rgba(234, 227, 219, 0.68) !important;
+  color: rgba(48, 43, 93, 0.55) !important;
 }
 
+/* Aktywna zakładka — pełny granatowy atrament */
 .theme-dark .workspace-tab-header.is-active .workspace-tab-header-inner-title,
 .theme-light .workspace-tab-header.is-active .workspace-tab-header-inner-title {
   color: #302b5d !important;
@@ -186,7 +183,7 @@ body {
 
 /* Ikona */
 .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-icon {
-  color: rgba(234, 227, 219, 0.36) !important;
+  color: rgba(106, 78, 111, 0.40) !important;
 }
 
 .theme-dark .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
@@ -206,20 +203,14 @@ body {
 }
 
 .workspace-tab-header:hover .workspace-tab-header-close-button {
-  opacity: 0.55 !important;
-  color: rgba(234, 227, 219, 0.80) !important;
-}
-
-.theme-dark .workspace-tab-header.is-active .workspace-tab-header-close-button,
-.theme-light .workspace-tab-header.is-active .workspace-tab-header-close-button {
-  opacity: 0.48 !important;
+  opacity: 0.50 !important;
   color: #6a4e6f !important;
 }
 
 .workspace-tab-header-close-button:hover {
   opacity: 1 !important;
   color: #962814 !important;
-  background-color: rgba(150, 40, 20, 0.10) !important;
+  background-color: rgba(150, 40, 20, 0.08) !important;
 }
 
 
@@ -229,15 +220,15 @@ body {
 
 .workspace-tab-header-new-tab,
 .workspace-tab-header-tab-list-collapse-toggle {
-  color: rgba(234, 227, 219, 0.38) !important;
+  color: rgba(106, 78, 111, 0.45) !important;
   border-radius: 4px !important;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .workspace-tab-header-new-tab:hover,
 .workspace-tab-header-tab-list-collapse-toggle:hover {
-  color: #eae3db !important;
-  background-color: rgba(106, 78, 111, 0.32) !important;
+  color: #6a4e6f !important;
+  background-color: rgba(106, 78, 111, 0.12) !important;
 }
 
 
@@ -247,7 +238,7 @@ body {
 
 .view-header {
   background-color: #f5f2ee !important;
-  border-bottom: 1px solid rgba(150, 40, 20, 0.18) !important;
+  border-bottom: 1px solid rgba(150, 40, 20, 0.16) !important;
 }
 
 .view-header-nav-buttons .clickable-icon {
@@ -265,7 +256,7 @@ body {
   font-style:  normal !important;
   font-size:   0.72rem !important;
   color: #302b5d !important;
-  opacity: 0.65;
+  opacity: 0.60;
 }
 
 .view-header-breadcrumb:hover {
@@ -273,8 +264,8 @@ body {
 }
 
 .view-header-breadcrumb-separator {
-  color: #6a4e6f !important;
-  opacity: 0.45 !important;
+  color: #962814 !important;
+  opacity: 0.40 !important;
 }
 
 .view-header-title {
@@ -288,7 +279,7 @@ body {
 .view-header-icon,
 .view-actions .clickable-icon {
   color: #6a4e6f !important;
-  opacity: 0.55;
+  opacity: 0.52;
   transition: opacity 0.15s ease, color 0.15s ease;
 }
 
