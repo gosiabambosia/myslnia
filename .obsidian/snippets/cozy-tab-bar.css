@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap');
+
 /* GÓRNY PASEK ZAKŁADEK */
 .workspace-tab-header-container {
   position: relative;
@@ -96,7 +98,10 @@
 }
 
 .workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  font-family: 'Playfair Display', serif !important;
+  font-style: italic !important;
   font-weight: 600 !important;
+  font-size: 12.5px !important;
 }
 
 /* Lewy i prawy przycisk paska bocznego */
