@@ -1,0 +1,229 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   MYŚLNIA — cozy-tab-bar
+   Visual concept: antique shelf / warm window frames / twilight library
+
+   The tab bar is a wooden shelf.
+   Inactive tabs are quiet objects resting on it.
+   The active tab is a window frame — same material, softly lit from within.
+   It does NOT glow white. It does NOT float. It belongs.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ── Palette tokens ─────────────────────────────────────────────────────── */
+
+.workspace-tabs {
+  --mysl-purple : #6a4e6f;
+  --mysl-ink    : #302b5d;
+  --mysl-accent : #962814;
+  --mysl-app    : #eae3db;
+  --mysl-note   : #f5f2ee;
+
+  /* The shelf: darker/cooler at top, warming toward the workspace below.
+     Deliberately earthier than the note paper — it reads as a different
+     material (wood/leather) rather than the same surface. */
+  --shelf-high  : #d1cac0;
+  --shelf-mid   : #d9d2c8;
+  --shelf-low   : #e1d9cf;
+
+  /* Active pane warmth: top nearly matches the shelf low — seamless join.
+     Bottom trends toward the note bg without quite reaching it.
+     The gradient implies light radiating upward from the content. */
+  --pane-top    : #e0d9cf;
+  --pane-bot    : #ece6db;
+}
+
+
+/* ── Container: the shelf surface ──────────────────────────────────────── */
+
+.workspace-tab-header-container {
+  background: linear-gradient(
+    to bottom,
+    var(--shelf-high) 0%,
+    var(--shelf-mid)  55%,
+    var(--shelf-low)  100%
+  ) !important;
+  border-bottom : 1px solid rgba(48, 43, 93, 0.10) !important;
+  padding       : 6px 6px 0 !important;
+  gap           : 2px !important;
+  box-shadow    : none !important;
+}
+
+.workspace-tab-header-container-inner {
+  gap         : 2px !important;
+  align-items : flex-end !important;
+}
+
+
+/* ── Surgical reset of conflicting theme decorations ───────────────────── */
+/* Many themes add box-shadows or fake rounded corners through ::before and
+   ::after on the tab header. This kills all of them cleanly. */
+
+.workspace-tab-header::before,
+.workspace-tab-header::after {
+  content    : none !important;
+  display    : none !important;
+  background : none !important;
+  box-shadow : none !important;
+}
+
+
+/* ── All tabs: base reset ───────────────────────────────────────────────── */
+
+.workspace-tab-header {
+  background  : transparent !important;
+  border      : 1px solid transparent !important;
+  border-bottom : none !important;
+
+  /* Flat top corners only — not a pill, not a capsule. More like a book
+     spine or a card edge. */
+  border-radius : 5px 5px 0 0 !important;
+
+  padding    : 0 13px !important;
+  height     : 30px !important;
+  min-height : 30px !important;
+  max-height : 30px !important;
+  margin-bottom : 0 !important;
+
+  /* No translateY. No floating. Tabs are grounded objects. */
+  transform  : none !important;
+  box-shadow : none !important;
+
+  transition :
+    background   180ms ease-out,
+    border-color 180ms ease-out,
+    box-shadow   180ms ease-out !important;
+}
+
+
+/* ── Inactive tabs ──────────────────────────────────────────────────────── */
+/* Almost invisible against the shelf. They are present, not prominent. */
+
+.workspace-tab-header:not(.is-active) {
+  background   : rgba(106, 78, 111, 0.05) !important;
+  border-color : rgba(106, 78, 111, 0.07) !important;
+}
+
+.workspace-tab-header:not(.is-active):hover {
+  background   : rgba(106, 78, 111, 0.10) !important;
+  border-color : rgba(106, 78, 111, 0.13) !important;
+}
+
+
+/* ── Active tab: the warm window frame ─────────────────────────────────── */
+/* Key decisions explained:
+   1. The background gradient's top value (#e0d9cf) is almost identical to
+      --shelf-low. The tab grows from the shelf — no visible seam at the join.
+   2. The gradient warms toward the bottom, implying the note's warmth rising.
+   3. The 2px top border in muted purple is a bookmark ribbon / frame edge —
+      earthy, not glowing.
+   4. Side borders are whisper-faint: just enough to define the shape.
+   5. No border-bottom: the tab opens into the content area below.
+   6. The inset shadow adds a very subtle pressed/cradled feeling.
+   7. NO translateY. NO white. NO bright glow. */
+
+.workspace-tab-header.is-active {
+  background : linear-gradient(
+    to bottom,
+    var(--pane-top) 0%,
+    var(--pane-bot) 100%
+  ) !important;
+
+  border-top    : 2px solid rgba(106, 78, 111, 0.58) !important;
+  border-left   : 1px solid rgba(106, 78, 111, 0.17) !important;
+  border-right  : 1px solid rgba(106, 78, 111, 0.17) !important;
+  border-bottom : none !important;
+
+  box-shadow :
+    inset 0 2px 6px rgba(106, 78, 111, 0.06),
+    0 2px 8px rgba(48, 43, 93, 0.07) !important;
+
+  transform  : none !important;
+  z-index    : 2 !important;
+}
+
+
+/* ── Tab inner content layout ───────────────────────────────────────────── */
+
+.workspace-tab-header-inner {
+  padding     : 0 !important;
+  gap         : 5px !important;
+  align-items : center !important;
+}
+
+
+/* ── Tab title text ─────────────────────────────────────────────────────── */
+
+.workspace-tab-header-inner-title {
+  font-size      : 12.5px !important;
+  font-weight    : 400 !important;
+  letter-spacing : 0.012em !important;
+  transition     : color 180ms ease-out !important;
+}
+
+.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
+  /* Muted: they're there but not competing for attention */
+  color   : rgba(106, 78, 111, 0.48) !important;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  /* Full saturation but still earthy, not loud */
+  color   : #6a4e6f !important;
+}
+
+
+/* ── File icon ──────────────────────────────────────────────────────────── */
+
+.workspace-tab-header-inner-icon {
+  color      : #6a4e6f !important;
+  opacity    : 0.36 !important;
+  transition : opacity 180ms ease-out !important;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  opacity : 0.58 !important;
+}
+
+
+/* ── Close button ────────────────────────────────────────────────────────── */
+/* Hidden by default, appears gently on hover. Red on close-hover — the only
+   moment of accent color in the whole tab bar. */
+
+.workspace-tab-header-close-button {
+  opacity    : 0 !important;
+  transition : opacity 140ms ease-out, color 140ms ease-out !important;
+}
+
+.workspace-tab-header:hover .workspace-tab-header-close-button,
+.workspace-tab-header.is-active .workspace-tab-header-close-button {
+  opacity : 0.36 !important;
+}
+
+.workspace-tab-header-close-button:hover {
+  opacity : 0.72 !important;
+  color   : #962814 !important;
+}
+
+
+/* ── New-tab button ─────────────────────────────────────────────────────── */
+
+.workspace-tab-header-new-tab {
+  color      : #6a4e6f !important;
+  opacity    : 0.26 !important;
+  transition : opacity 140ms ease-out !important;
+}
+
+.workspace-tab-header-new-tab:hover {
+  opacity : 0.55 !important;
+}
+
+
+/* ── Scrollbar on tab strip (minimal) ──────────────────────────────────── */
+
+.workspace-tab-header-container::-webkit-scrollbar {
+  height : 2px !important;
+}
+
+.workspace-tab-header-container::-webkit-scrollbar-thumb {
+  background    : rgba(106, 78, 111, 0.22) !important;
+  border-radius : 2px !important;
+}
