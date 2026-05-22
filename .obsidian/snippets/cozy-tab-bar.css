@@ -60,8 +60,7 @@
 .workspace-tab-header.is-active {
   background: rgba(245, 242, 238, 0.85) !important;
   border-radius: 6px 6px 0 0 !important;
-  border: 1px solid rgba(205, 175, 140, 0.20) !important;
-  border-bottom: none !important;
+  border: none !important;
   margin-top: 2px !important;
   margin-bottom: 0 !important;
   box-shadow:
