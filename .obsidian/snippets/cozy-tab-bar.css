@@ -12,10 +12,9 @@
       #966936 72%,
       #555839 100%);
   box-shadow:
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 8px 24px rgba(0, 0, 0, 0.18);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: none;
 }
 
 /* Ziarno / mgiełka */
@@ -63,9 +62,7 @@
   border-radius: 6px 6px 0 0 !important;
   border: 1px solid rgba(205, 175, 140, 0.20) !important;
   border-bottom: none !important;
-  margin-bottom: -1px !important;
-  position: relative !important;
-  z-index: 10 !important;
+  margin-bottom: 0 !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 250, 240, 0.45),
     0 2px 10px rgba(12, 6, 3, 0.26);
