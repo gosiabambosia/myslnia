@@ -89,14 +89,32 @@
   opacity: 1;
 }
 
-/* Lewy przycisk i kontrolki */
+/* Lewy i prawy przycisk paska bocznego */
 .titlebar-button-container,
 .sidebar-toggle-button {
   background: transparent !important;
 }
 
-.sidebar-toggle-button svg {
-  color: #f5ede8 !important;
-  stroke: #f5ede8 !important;
-  opacity: 0.9;
+.sidebar-toggle-button svg,
+.mod-right .sidebar-toggle-button svg,
+.mod-right-split .sidebar-toggle-button svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+  opacity: 0.85 !important;
+}
+
+/* Przycisk nowej karty */
+.workspace-tab-header-new-tab {
+  color: #f4e9df !important;
+  opacity: 0.70 !important;
+  transition: opacity 150ms ease !important;
+}
+
+.workspace-tab-header-new-tab svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+}
+
+.workspace-tab-header-new-tab:hover {
+  opacity: 1 !important;
 }
