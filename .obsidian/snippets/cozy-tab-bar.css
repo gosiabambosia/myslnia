@@ -1,229 +1,128 @@
 /* ══════════════════════════════════════════════════════════════════════════
    MYŚLNIA — cozy-tab-bar
-   Visual concept: antique shelf / warm window frames / twilight library
-
-   The tab bar is a wooden shelf.
-   Inactive tabs are quiet objects resting on it.
-   The active tab is a window frame — same material, softly lit from within.
-   It does NOT glow white. It does NOT float. It belongs.
    ══════════════════════════════════════════════════════════════════════════ */
 
 
-/* ── Palette tokens ─────────────────────────────────────────────────────── */
-
-.workspace-tabs {
-  --mysl-purple : #6a4e6f;
-  --mysl-ink    : #302b5d;
-  --mysl-accent : #962814;
-  --mysl-app    : #eae3db;
-  --mysl-note   : #f5f2ee;
-
-  /* The shelf: darker/cooler at top, warming toward the workspace below.
-     Deliberately earthier than the note paper — it reads as a different
-     material (wood/leather) rather than the same surface. */
-  --shelf-high  : #d1cac0;
-  --shelf-mid   : #d9d2c8;
-  --shelf-low   : #e1d9cf;
-
-  /* Active pane warmth: top nearly matches the shelf low — seamless join.
-     Bottom trends toward the note bg without quite reaching it.
-     The gradient implies light radiating upward from the content. */
-  --pane-top    : #e0d9cf;
-  --pane-bot    : #ece6db;
-}
-
-
-/* ── Container: the shelf surface ──────────────────────────────────────── */
-
+/* GÓRNY PASEK ZAKŁADEK */
 .workspace-tab-header-container {
-  background: linear-gradient(
-    to bottom,
-    var(--shelf-high) 0%,
-    var(--shelf-mid)  55%,
-    var(--shelf-low)  100%
-  ) !important;
-  border-bottom : 1px solid rgba(48, 43, 93, 0.10) !important;
-  padding       : 6px 6px 0 !important;
-  gap           : 2px !important;
-  box-shadow    : none !important;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(255, 190, 210, 0.18), transparent 18%),
+    radial-gradient(circle at 82% 22%, rgba(255, 220, 150, 0.10), transparent 60%),
+    linear-gradient(90deg,
+      #3f1006 0%,
+      #691a0a 22%,
+      #8a2631 48%,
+      #966936 72%,
+      #555839 100%);
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.workspace-tab-header-container-inner {
-  gap         : 2px !important;
-  align-items : flex-end !important;
+/* Ziarno / mgiełka */
+.workspace-tab-header-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+}
+
+/* Delikatny połysk nad paskiem */
+.workspace-tab-header-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10), transparent 24%),
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  opacity: 0.7;
 }
 
 
-/* ── Surgical reset of conflicting theme decorations ───────────────────── */
-/* Many themes add box-shadows or fake rounded corners through ::before and
-   ::after on the tab header. This kills all of them cleanly. */
-
-.workspace-tab-header::before,
-.workspace-tab-header::after {
-  content    : none !important;
-  display    : none !important;
-  background : none !important;
-  box-shadow : none !important;
-}
-
-
-/* ── All tabs: base reset ───────────────────────────────────────────────── */
-
+/* Same zakładki */
 .workspace-tab-header {
-  background  : transparent !important;
-  border      : 1px solid transparent !important;
-  border-bottom : none !important;
+  border-radius: 18px !important;
+  margin: 6px 4px !important;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
 
-  /* Flat top corners only — not a pill, not a capsule. More like a book
-     spine or a card edge. */
-  border-radius : 5px 5px 0 0 !important;
-
-  padding    : 0 13px !important;
-  height     : 30px !important;
-  min-height : 30px !important;
-  max-height : 30px !important;
-  margin-bottom : 0 !important;
-
-  /* No translateY. No floating. Tabs are grounded objects. */
-  transform  : none !important;
-  box-shadow : none !important;
-
-  transition :
-    background   180ms ease-out,
-    border-color 180ms ease-out,
-    box-shadow   180ms ease-out !important;
+.workspace-tab-header:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
 }
 
 
-/* ── Inactive tabs ──────────────────────────────────────────────────────── */
-/* Almost invisible against the shelf. They are present, not prominent. */
+/* ── Aktywna zakładka ───────────────────────────────────────────────────────
+   Problem z poprzednią wersją: tło rgba(255,245,238,0.20) było prawie
+   przezroczyste — ciemnopurpurowy tekst (#6a4e6f) wisiał bez powierzchni
+   na ciemnym pasku, wyglądał jak naklejka.
 
-.workspace-tab-header:not(.is-active) {
-  background   : rgba(106, 78, 111, 0.05) !important;
-  border-color : rgba(106, 78, 111, 0.07) !important;
-}
-
-.workspace-tab-header:not(.is-active):hover {
-  background   : rgba(106, 78, 111, 0.10) !important;
-  border-color : rgba(106, 78, 111, 0.13) !important;
-}
-
-
-/* ── Active tab: the warm window frame ─────────────────────────────────── */
-/* Key decisions explained:
-   1. The background gradient's top value (#e0d9cf) is almost identical to
-      --shelf-low. The tab grows from the shelf — no visible seam at the join.
-   2. The gradient warms toward the bottom, implying the note's warmth rising.
-   3. The 2px top border in muted purple is a bookmark ribbon / frame edge —
-      earthy, not glowing.
-   4. Side borders are whisper-faint: just enough to define the shape.
-   5. No border-bottom: the tab opens into the content area below.
-   6. The inset shadow adds a very subtle pressed/cradled feeling.
-   7. NO translateY. NO white. NO bright glow. */
-
+   Rozwiązanie:
+   1. Ciepły pergamin przy ~86% kryciu — wystarczająco nieprzezroczysty,
+      żeby tekst #6a4e6f miał pod sobą ciepłą, czytelną powierzchnię.
+   2. Bez backdrop-filter: blur — bez blendu kolory paska delikatnie
+      przebijają przez 14% przezroczystości jako ciepły odcień, nie szron.
+   3. transform: none — zakładka jest osadzona, nie unosi się.
+   4. Ramka w ciepłym piaskowym tonie — jak brzeg wyblakłej skóry.   ──────────────────────────────────────────────────────────────────────────── */
 .workspace-tab-header.is-active {
-  background : linear-gradient(
-    to bottom,
-    var(--pane-top) 0%,
-    var(--pane-bot) 100%
-  ) !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(242, 222, 196, 0.88) 0%,
+      rgba(232, 210, 178, 0.82) 100%
+    ) !important;
 
-  border-top    : 2px solid rgba(106, 78, 111, 0.58) !important;
-  border-left   : 1px solid rgba(106, 78, 111, 0.17) !important;
-  border-right  : 1px solid rgba(106, 78, 111, 0.17) !important;
-  border-bottom : none !important;
+  border: 1px solid rgba(195, 160, 115, 0.32) !important;
 
-  box-shadow :
-    inset 0 2px 6px rgba(106, 78, 111, 0.06),
-    0 2px 8px rgba(48, 43, 93, 0.07) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 242, 215, 0.32),
+    0 4px 14px rgba(20, 10, 5, 0.26) !important;
 
-  transform  : none !important;
-  z-index    : 2 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  transform: none !important;
 }
 
 
-/* ── Tab inner content layout ───────────────────────────────────────────── */
+/* Tekst i ikony */
+.workspace-tab-header-container .workspace-tab-header-inner-title,
+.workspace-tab-header-container .workspace-tab-header-inner-icon svg,
+.workspace-tab-header .workspace-tab-header-status-icon svg {
+  color: #f4e9df !important;
+  stroke: #f4e9df !important;
+  opacity: 0.92;
+}
 
-.workspace-tab-header-inner {
-  padding     : 0 !important;
-  gap         : 5px !important;
-  align-items : center !important;
+.workspace-tab-header.is-active .workspace-tab-header-inner-title,
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon svg,
+.workspace-tab-header.is-active .workspace-tab-header-status-icon svg {
+  color: #6a4e6f !important;
+  stroke: #6a4e6f !important;
+  opacity: 1;
 }
 
 
-/* ── Tab title text ─────────────────────────────────────────────────────── */
-
-.workspace-tab-header-inner-title {
-  font-size      : 12.5px !important;
-  font-weight    : 400 !important;
-  letter-spacing : 0.012em !important;
-  transition     : color 180ms ease-out !important;
+/* Lewy przycisk i kontrolki */
+.titlebar-button-container,
+.sidebar-toggle-button {
+  background: transparent !important;
 }
 
-.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
-  /* Muted: they're there but not competing for attention */
-  color   : rgba(106, 78, 111, 0.48) !important;
-}
-
-.workspace-tab-header.is-active .workspace-tab-header-inner-title {
-  /* Full saturation but still earthy, not loud */
-  color   : #6a4e6f !important;
-}
-
-
-/* ── File icon ──────────────────────────────────────────────────────────── */
-
-.workspace-tab-header-inner-icon {
-  color      : #6a4e6f !important;
-  opacity    : 0.36 !important;
-  transition : opacity 180ms ease-out !important;
-}
-
-.workspace-tab-header.is-active .workspace-tab-header-inner-icon {
-  opacity : 0.58 !important;
-}
-
-
-/* ── Close button ────────────────────────────────────────────────────────── */
-/* Hidden by default, appears gently on hover. Red on close-hover — the only
-   moment of accent color in the whole tab bar. */
-
-.workspace-tab-header-close-button {
-  opacity    : 0 !important;
-  transition : opacity 140ms ease-out, color 140ms ease-out !important;
-}
-
-.workspace-tab-header:hover .workspace-tab-header-close-button,
-.workspace-tab-header.is-active .workspace-tab-header-close-button {
-  opacity : 0.36 !important;
-}
-
-.workspace-tab-header-close-button:hover {
-  opacity : 0.72 !important;
-  color   : #962814 !important;
-}
-
-
-/* ── New-tab button ─────────────────────────────────────────────────────── */
-
-.workspace-tab-header-new-tab {
-  color      : #6a4e6f !important;
-  opacity    : 0.26 !important;
-  transition : opacity 140ms ease-out !important;
-}
-
-.workspace-tab-header-new-tab:hover {
-  opacity : 0.55 !important;
-}
-
-
-/* ── Scrollbar on tab strip (minimal) ──────────────────────────────────── */
-
-.workspace-tab-header-container::-webkit-scrollbar {
-  height : 2px !important;
-}
-
-.workspace-tab-header-container::-webkit-scrollbar-thumb {
-  background    : rgba(106, 78, 111, 0.22) !important;
-  border-radius : 2px !important;
+.sidebar-toggle-button svg {
+  color: #f5ede8 !important;
+  stroke: #f5ede8 !important;
+  opacity: 0.9;
 }
