@@ -97,6 +97,7 @@
 
 .workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner-title {
   font-weight: 500 !important;
+  font-variation-settings: 'wght' 500 !important;
 }
 
 /* Lewy i prawy przycisk paska bocznego */
