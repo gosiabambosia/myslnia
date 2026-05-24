@@ -201,8 +201,12 @@ a.beautitab-recentlyedited-file .beautitab-icon svg {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    margin-top: 8px !important;
-    transform: translateY(-20px) !important;
+    position: absolute !important;
+    bottom: 24px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
 }
 
 .bt-quote,
