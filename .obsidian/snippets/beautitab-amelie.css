@@ -44,6 +44,21 @@
 }
 
 
+/* ── CONTAINER — collapse any inter-section gap ──────────── */
+/* BeautiTab may use justify-content: space-between or a large
+   gap that pushes search/files far from the clock+greeting.
+   We override it and control spacing via element margins only. */
+
+.beautitab-container,
+.bt-container {
+    justify-content: center !important;
+    gap: 0 !important;
+    row-gap: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+
 /* ── GREETING ────────────────────────────────────────────── */
 /* translateY(-33px) places it in the narrow gap between the
    headboard rail and the ceiling of the background image. */
@@ -59,6 +74,7 @@
     text-transform: lowercase !important;
     color: rgba(255, 215, 170, 0.45) !important;
     margin-top: 0px !important;
+    margin-bottom: 0px !important;
     transform: translateY(-33px) !important;
 }
 
@@ -68,8 +84,8 @@
 .beautitab-search-wrapper {
     width: 320px !important;
     height: 44px !important;
-    margin: 20px auto !important;
-    transform: translateY(10px) !important;
+    margin: 4px auto !important;
+    transform: translateY(-20px) !important;
     border-radius: 18px !important;
 }
 
@@ -122,7 +138,7 @@ a.beautitab-recentlyedited-file {
     max-width: 120px !important;
     min-height: 56px !important;
     padding: 6px 10px !important;
-    margin-top: 18px !important;
+    margin-top: 4px !important;
     border-radius: 19px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     backdrop-filter: blur(10px) saturate(0.9) !important;
@@ -185,7 +201,8 @@ a.beautitab-recentlyedited-file .beautitab-icon svg {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    transform: translateY(-10px) !important;
+    margin-top: 8px !important;
+    transform: translateY(-20px) !important;
 }
 
 .bt-quote,
