@@ -45,9 +45,9 @@
 
 
 /* ── CONTAINER — collapse any inter-section gap ──────────── */
-/* BeautiTab may use justify-content: space-between or a large
-   gap that pushes search/files far from the clock+greeting.
-   We override it and control spacing via element margins only. */
+/* padding-bottom biases justify-content:center upward to
+   compensate for the quote being position:absolute (removed
+   from flex flow), which otherwise drifts the center down. */
 
 .beautitab-container,
 .bt-container {
@@ -55,7 +55,7 @@
     gap: 0 !important;
     row-gap: 0 !important;
     padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-bottom: 120px !important;
 }
 
 
