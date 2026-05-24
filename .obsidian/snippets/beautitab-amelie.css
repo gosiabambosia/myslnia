@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300&family=Michroma&family=Instrument+Serif:ital@1&family=Inter:wght@200;300;400&display=swap');
+
+/* ============================================================
+   BEAUTITAB — AMÉLIE REFINED
+   Vault: Myślnia · Drop into: .obsidian/snippets/
+   ============================================================ */
+
+
+/* ── CLOCK ───────────────────────────────────────────────── */
+
+.bt-clock,
+.bt-time,
+.bt-clock-time,
+.clock-time,
+.clock-display,
+.beautitab-clock,
+.beautitab-time,
+.new-tab-clock,
+[class*="clock"],
+[class*="Clock"] {
+    font-family: 'Michroma', sans-serif !important;
+    font-weight: 300 !important;
+    display: inline-block !important;
+    font-size: clamp(28px, 7.5vw, 36px) !important;
+    line-height: 1 !important;
+    letter-spacing: 0.01em !important;
+    color: rgba(255, 252, 240, 0.95) !important;
+    opacity: 0.93 !important;
+    margin-bottom: 52px !important;
+    transform: translateY(-18px) scaleX(1.30) scaleY(0.85) !important;
+    text-shadow:
+        0 0 14px rgba(134, 188, 145, 0.95),
+        0 0 40px rgba(255, 249, 148, 0.70),
+        0 0 60px rgba(255, 171,   1, 0.42),
+        0 0 80px rgba(180, 220, 255, 0.16),
+        0 0 100px rgba(255, 240, 180, 0.10) !important;
+    filter:
+        blur(0.5px)
+        drop-shadow(0 0 30px rgba(254, 237, 168, 0.28))
+        drop-shadow(0 0 50px rgba(253, 217, 111, 0.58)) !important;
+    -webkit-text-stroke: none !important;
+    mix-blend-mode: screen;
+    transition: opacity 0.4s ease, filter 0.5s ease;
+}
+
+
+/* ── CONTAINER — collapse any inter-section gap ──────────── */
+/* padding-bottom biases justify-content:center upward to
+   compensate for the quote being position:absolute (removed
+   from flex flow), which otherwise drifts the center down. */
+
+.beautitab-container,
+.bt-container {
+    justify-content: center !important;
+    gap: 0 !important;
+    row-gap: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 120px !important;
+}
+
+
+/* ── GREETING ────────────────────────────────────────────── */
+/* translateY(-33px) places it in the narrow gap between the
+   headboard rail and the ceiling of the background image. */
+
+.bt-greeting,
+.beautitab-greeting,
+.greeting {
+    display: inline-block !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 300 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.6em !important;
+    text-transform: lowercase !important;
+    color: rgba(255, 215, 170, 0.45) !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    transform: translateY(-33px) !important;
+}
+
+
+/* ── SEARCH BAR ──────────────────────────────────────────── */
+
+.beautitab-search-wrapper {
+    width: 320px !important;
+    height: 44px !important;
+    margin: 4px auto !important;
+    transform: translateY(-20px) !important;
+    border-radius: 18px !important;
+}
+
+span.beautitab-search-text {
+    font-size: 16px !important;
+    line-height: 16px !important;
+    letter-spacing: 0.03em !important;
+    text-transform: lowercase !important;
+    color: rgba(255, 215, 170, 0.45) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 300 !important;
+}
+
+.beautitab-search-icon,
+.beautitab-search-icon svg,
+.beautitab-search-wrapper svg,
+.beautitab-search-wrapper svg path {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    color: rgba(255, 215, 170, 0.55) !important;
+    stroke: rgba(255, 215, 170, 0.55) !important;
+    opacity: 0.75 !important;
+}
+
+
+/* ── RECENT FILES ────────────────────────────────────────── */
+/* FIX: removed scale(1.07) from individual pills — CSS transform
+   does not affect layout flow, so scale() made each pill visually
+   bleed into its neighbours while the gap was computed against the
+   pre-scale box size. Scale is now applied on :hover only.
+   FIX: widened from 90px → 110px for icon + readable text.
+   FIX: -webkit-line-clamp 1 → 2 so filenames can wrap to 2 lines. */
+
+.beautitab-recentlyedited {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 12px 12px !important;
+}
+
+a.beautitab-recentlyedited-file {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 120px !important;
+    min-height: 56px !important;
+    padding: 6px 10px !important;
+    margin-top: 4px !important;
+    border-radius: 19px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) saturate(0.9) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    opacity: 1 !important;
+    transform: none !important;
+    overflow: hidden !important;
+    background-clip: padding-box !important;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        opacity 0.25s ease !important;
+}
+
+a.beautitab-recentlyedited-file:hover {
+    transform: scale(1.04) !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+a.beautitab-recentlyedited-file .beautitab-recentlyedited-file-name {
+    color: #7b6845 !important;
+    opacity: 1 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 300 !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+
+a.beautitab-recentlyedited-file .beautitab-icon,
+a.beautitab-recentlyedited-file .beautitab-icon svg {
+    color: #7b6845 !important;
+    stroke: #7b6845 !important;
+    opacity: 1 !important;
+    width: 14px !important;
+    height: 14px !important;
+    flex: 0 0 auto !important;
+    filter: brightness(1.05) !important;
+    transform: scale(1.05) !important;
+}
+
+
+/* ── QUOTE ───────────────────────────────────────────────── */
+
+.beautitab-quote {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    position: absolute !important;
+    bottom: 24px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+
+.bt-quote,
+.quote-text,
+.beautitab-quote-content {
+    font-family: 'Instrument Serif', serif !important;
+    font-style: italic !important;
+    font-weight: 300 !important;
+    font-size: clamp(14px, 1.15vw, 18px) !important;
+    line-height: 1.46 !important;
+    letter-spacing: 0.01em !important;
+    color: rgba(255, 228, 195, 0.64) !important;
+    text-align: center !important;
+    max-width: 760px !important;
+    padding: 0 20px !important;
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.38),
+        0 0 14px rgba(255, 220, 170, 0.04) !important;
+    opacity: 0.82 !important;
+}
+
+.bt-quote-author,
+.quote-author,
+.beautitab-quote-author {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.24em !important;
+    text-transform: uppercase !important;
+    color: rgba(255, 215, 170, 0.32) !important;
+    opacity: 0.92 !important;
+    margin-top: 2px !important;
+    transform: translateY(-8px) !important;
+}
+
+.quote-container::before,
+.quote-container::after {
+    display: none !important;
+}
+
+.quote-container,
+.bt-quote-container,
+.beautitab-quote-container {
+    max-width: 660px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+}
+
+
+/* ── OVERLAY & FILM GRAIN ────────────────────────────────── */
+
+.bt-overlay {
+    background: radial-gradient(
+        ellipse 80% 75% at 70% 62%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0.32) 100%
+    ) !important;
+}
+
+.beautitab-container::after,
+.bt-container::after,
+.workspace-leaf-content[data-type="beautitab"]::after {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+    opacity: 0.055 !important;
+    mix-blend-mode: overlay !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") !important;
+    background-repeat: repeat !important;
+}
